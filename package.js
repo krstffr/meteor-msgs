@@ -1,5 +1,7 @@
 Package.describe({
-  "summary": "Package for displaying messages to the user."
+  "summary": "Package for displaying messages to the user.",
+  "version": "0.0.1",
+  "git": "https://github.com/krstffr/meteor-msgs"
 });
 
 Package.onUse(function (api) {
