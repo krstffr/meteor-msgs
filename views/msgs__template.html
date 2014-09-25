@@ -1,0 +1,21 @@
+<template name="msgs">
+
+	{{#if messages }}
+
+		<div class="msgs__container">
+
+			{{#each messages }}
+
+				<div class="msgs__message msgs__message--{{ type }}">
+
+					{{ message }}
+
+				</div>
+
+			{{/each}}
+
+		</div>
+
+	{{/if}}
+	
+</template>
