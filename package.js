@@ -7,6 +7,8 @@ Package.describe({
 
 Package.onUse(function (api) {
 
+	api.versionsFrom("METEOR@0.9.0");
+
   api.use('templating', 'client');
 
   api.add_files(['views/msgs__template.html', 'views/msgs__template.js'], 'client');

@@ -22,7 +22,7 @@ MsgsHandler = function () {
 
   that.addMessage = function ( message, type ) {
     
-    var msg = { message: message, type: type };
+    var msg = { message: message, type: type, timestamp: new Date() };
     var currentMessages = that.getMessages();
     currentMessages.push( msg );
     that.setMessages( currentMessages );
