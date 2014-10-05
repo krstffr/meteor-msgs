@@ -5,6 +5,11 @@ MsgsHandler = function () {
 	// Config vars
   that.resetTime = 5000;
 
+  // Method for removing all messages
+  that.removeAllMessage = function () {
+    that.setMessages( [] );
+  };
+
   that.removeMessage = function ( msg ) {
 
     var currentMessages = that.getMessages();
@@ -21,6 +26,12 @@ MsgsHandler = function () {
   };
 
   that.addMessage = function ( message, type ) {
+
+    if (typeof message !== 'string')
+      throw new Meteor.Error('message should be a string');
+
+    if (typeof type !== 'string')
+      throw new Meteor.Error('type should be a string');
     
     var msg = { message: message, type: type, timestamp: new Date() };
     var currentMessages = that.getMessages();
@@ -31,6 +42,8 @@ MsgsHandler = function () {
     Meteor.setTimeout( function () {
       that.removeMessage( msg );
     }, that.resetTime);
+
+    return msg;
 
   };
 

@@ -18,3 +18,11 @@ Package.onUse(function (api) {
   api.export('Msgs', 'client');
 
 });
+
+Package.on_test(function (api) {
+  api.use('krstffr:msgs');
+  api.use('tinytest');
+  api.use('test-helpers');
+  api.add_files('msgs.js', 'client');
+  api.add_files('tests/msgs-tests.js', 'client');
+});
