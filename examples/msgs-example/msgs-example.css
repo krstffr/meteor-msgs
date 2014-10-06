@@ -1,0 +1,24 @@
+/* CSS declarations go here */
+.msgs__container {
+	border: 1px solid #ddd;
+}
+.msgs__message {
+	background: #eee;
+	padding: 1em;
+	border-top: 1px solid #ddd;
+}
+.msgs__message:first-child {
+	border-top: none;
+}
+.msgs__message--success {
+	background: #cfc;
+}
+.msgs__message--warning {
+	background: #fcc;
+}
+
+h2 {
+	border-top: 1px solid #ccc;
+	padding-top: 2em;
+	margin-top: 2em;
+}

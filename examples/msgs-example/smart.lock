@@ -1,0 +1,15 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "krstffr:msgs": {
+        "path": "../.."
+      }
+    },
+    "packages": {
+      "krstffr:msgs": {
+        "path": "../.."
+      }
+    }
+  }
+}

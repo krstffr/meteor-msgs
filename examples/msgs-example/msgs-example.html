@@ -1,0 +1,75 @@
+<head>
+  <title>msgs-example</title>
+</head>
+
+<body>
+  <h1>krstffr:msgs test-app!</h1>
+
+  {{> msgsDemo }}
+
+</body>
+
+<template name="msgsDemo">
+
+	<button class="messages-hide-all">
+		Hide all messages
+	</button>
+
+	<h2>Messages with only a type.</h2>
+
+  <p>
+    Below various lists of messages will display depending on their type.
+  </p>
+	
+	<button class="messages-add">
+  	Add a message with no type
+  </button>
+  <button class="messages-add" data-message-type="success">
+  	Add a message of type "success"
+  </button>
+  <button class="messages-add" data-message-type="warning">
+  	Add a message of type "warning"
+  </button>
+  
+  <h3>All messages:</h3>
+  {{> msgs }}
+
+	<h3>All success messages:</h3>
+	{{> msgs type='success' }}
+
+	<h3>All warning messages:</h3>
+	{{> msgs type='warning' }}
+	
+	<h2>Messages with a category as well.</h2>
+  
+  <p>
+    Below various lists of messages will display depending on their category.
+  </p>
+
+	<button class="messages-add" data-category="cars">
+  	Add a message of category "cars"
+  </button>
+  <button class="messages-add" data-category="bicycles">
+  	Add a message of category "bicycles"
+  </button>
+  <button class="messages-add" data-category="bicycles" data-message-type="success">
+  	Add a message of category "bicycles" with type "success"
+  </button>
+  <button class="messages-add" data-category="bicycles" data-message-type="warning">
+  	Add a message of category "bicycles" with type "warning"
+  </button>
+
+  <h3>All messages in category cars:</h3>
+  {{> msgs category='cars' }}
+
+  <h3>All messages in category bicycles:</h3>
+  {{> msgs category='bicycles' }}
+
+  <h3>All messages in category bicycles which are of type sucess:</h3>
+  {{> msgs category='bicycles' type='success' }}
+
+    <h3>All messages in category bicycles which are of type warning:</h3>
+  {{> msgs category='bicycles' type='warning' }}
+
+
+</template>
