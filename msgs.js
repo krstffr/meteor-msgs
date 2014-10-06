@@ -16,10 +16,11 @@ MsgsHandler = function () {
   };
 
   // Method for removing all messages
-  that.removeAllMessage = function () {
+  that.removeAllMessages = function () {
     that.setMessages( [] );
   };
 
+  // Method for removing a message (which is the same as the one which get's passed)
   that.removeMessage = function ( msg ) {
 
     var currentMessages = that.getMessages();
@@ -35,15 +36,23 @@ MsgsHandler = function () {
     
   };
 
-  that.addMessage = function ( message, type ) {
+  that.addMessage = function ( message, type, category ) {
 
     if (typeof message !== 'string')
       throw new Meteor.Error('message should be a string');
 
     if (typeof type !== 'string')
       throw new Meteor.Error('type should be a string');
+
+    // category is optional
+    if (category && typeof category !== 'string')
+      throw new Meteor.Error('category should be a string');
     
     var msg = { message: message, type: type, timestamp: new Date() };
+    
+    if (category)
+      msg.category = category;
+
     var currentMessages = that.getMessages();
     currentMessages.push( msg );
     that.setMessages( currentMessages );
@@ -79,10 +88,45 @@ MsgsHandler = function () {
 
   };
 
-  that.getMessagesOfType = function ( type ) {
-    return _.filter(that.getMessages(), function( message ) {
-      return message.type === type;
-    });
+  that.getMessagesFiltered = function ( filters ) {
+    // filter should not be a string or number, and should have a length
+    if (!filters)
+      throw new Meteor.Error('filters is not set!');
+
+    if (typeof filters === 'string')
+      throw new Meteor.Error('filters should not be a string!');
+
+    if (typeof filters === 'number')
+      throw new Meteor.Error('filters should not be an integer!');
+
+    if (typeof filters === 'boolean')
+      throw new Meteor.Error('filters should not be a boolean!');
+
+    if (filters.length < 1)
+      throw new Meteor.Error('filters has less than 1 elements!');
+
+    // Iterate over all messages
+    return _( that.getMessages() )
+    .chain()
+    .map( function( message ) {
+      // if returnMessageBool is true at the end of this map()
+      // then return the message, else return "false" (which
+      // gets deleted by the compact() later.)
+      var returnMessageBool = true;
+      _.each(filters, function( filter ) {
+        // Iterate over every filter, and if one is not true
+        // then set the returnMessageBool to false
+        if (message[filter.filterKey] !== filter.filterValue)
+          returnMessageBool = false;
+      });
+      if (!returnMessageBool)
+        return false;
+      return message;
+    })
+    .flatten()
+    .compact()
+    .value();
+
   };
 
 };

@@ -6,7 +6,11 @@
 
 			{{#each messages }}
 
-				<div class="msgs__message msgs__message--{{ type }}">
+				<div class="
+				msgs__message 
+				{{#if type }}msgs__message--{{ type }}{{/if}}
+				{{#if category }}msgs__message__category--{{ category }}{{/if}}
+				">
 
 					{{{ message }}}
 

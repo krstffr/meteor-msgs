@@ -40,17 +40,34 @@ Tinytest.add("Msgs - only strings should be acceptable for message and type", fu
 
 });
 
+Tinytest.add("Msgs - remove one message using .removeMessage() ", function (test) {
+	// Remove all messages
+	Msgs.removeAllMessages();
+	test.equal(Msgs.getMessages().length, 0);
+
+	// Add a message
+	var message = Msgs.addMessage('m', 'type');
+	test.equal(Msgs.getMessages().length, 1);
+
+	// Remove the message
+	Msgs.removeMessage( message );
+
+	// We should now have 0 messages again
+	test.equal(Msgs.getMessages().length, 0);
+
+});
+
 Tinytest.add("Msgs - reset all message", function (test) {
 	// Just set a random message so we are sure there is at least one set
 	Msgs.addMessage('m', 'type');
 	test.notEqual(Msgs.getMessages().length, 0);
-	Msgs.removeAllMessage();
+	Msgs.removeAllMessages();
 	test.equal(Msgs.getMessages().length, 0);
 });
 
 Tinytest.add('Msgs - set message should be retrievable', function (test) {
 	// Start by removing all messages
-	Msgs.removeAllMessage();
+	Msgs.removeAllMessages();
 	// Set two messages
 	var message1 = { message: 'message number one', type: 'alert' };
 	var message2 = { message: 'message number two is a bit longer', type: 'normal' };
@@ -63,25 +80,44 @@ Tinytest.add('Msgs - set message should be retrievable', function (test) {
 });
 
 // Check filter
-Tinytest.add('Msgs - filter messages by type', function (test) {
+Tinytest.add('Msgs - filter messages', function (test) {
+
 	// Create some messages of various types
 	var message1 = { message: 'm1', type: 'warning'};
 	var message2 = { message: 'm2', type: 'success'};
-	var message3 = { message: 'm3', type: 'warning'};
+	var message3 = { message: 'm3', type: 'warning', category: 'cats' };
+	var message4 = { message: 'm4', type: 'warning', category: 'dogs' };
+	var message5 = { message: 'm5', type: 'success', category: 'dogs' };
+	
 	// Reset all messages
-	Msgs.removeAllMessage();
+	Msgs.removeAllMessages();
+
 	// Add all messages
 	Msgs.addMessage( message1.message, message1.type );
 	Msgs.addMessage( message2.message, message2.type );
-	Msgs.addMessage( message3.message, message3.type );
-	// Get all the warning messages which should be two
-	var warningMessages = Msgs.getMessagesOfType('warning');
-	test.equal(warningMessages.length, 2);
+	Msgs.addMessage( message3.message, message3.type, message3.category );
+	Msgs.addMessage( message4.message, message4.type, message4.category );
+	Msgs.addMessage( message5.message, message5.type, message5.category );
+
+	// Get all the warning messages which should be three
+	var warningMessages = Msgs.getMessagesFiltered([{ filterKey: 'type', filterValue: 'warning' }]);
+	test.equal(warningMessages.length, 3);
+
 	// Get all the success messages
-	var successMessages = Msgs.getMessagesOfType('success');
-	test.equal(successMessages.length, 1);
+	var successMessages = Msgs.getMessagesFiltered([{ filterKey: 'type', filterValue: 'success' }]);
+	test.equal(successMessages.length, 2);
+
+	// Get all messages of category dogs
+	var dogMessages = Msgs.getMessagesFiltered([{ filterKey: 'category', filterValue: 'dogs' }]);
+	test.equal(dogMessages.length, 2);
+
+	// Get all messages of category dogs of type success
+	var dogSuccessMessages = Msgs.getMessagesFiltered([{ filterKey: 'category', filterValue: 'dogs' }, { filterKey: 'type', filterValue: 'success' }]);
+	test.equal(dogSuccessMessages.length, 1);
+
 	// Reset all messages
-	Msgs.removeAllMessage();
+	Msgs.removeAllMessages();
+
 });
 
 // test the setMessages method
@@ -103,7 +139,7 @@ Tinytest.add('Msgs - setMessages method', function (test) {
 	Msgs.setMessages([1]);
 	test.equal( Msgs.getMessages().length, 1 );
 	// Reset everything
-	Msgs.removeAllMessage();
+	Msgs.removeAllMessages();
 });
 
 // Check that user can set new time for resetTimer
