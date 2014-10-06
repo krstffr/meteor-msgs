@@ -5,6 +5,16 @@ MsgsHandler = function () {
 	// Config vars
   that.resetTime = 5000;
 
+  // Method for setting resetTime
+  that.setResetTime = function ( newTime ) {
+
+    if (typeof newTime !== 'number')
+      throw new Meteor.Error('newTime should be a number');
+
+    that.resetTime = newTime;
+    
+  };
+
   // Method for removing all messages
   that.removeAllMessage = function () {
     that.setMessages( [] );
@@ -52,7 +62,27 @@ MsgsHandler = function () {
   };
 
   that.setMessages = function ( messages ) {
+
+    if (!messages)
+      throw new Meteor.Error('messages is not set!');
+
+    if (typeof messages === 'string')
+      throw new Meteor.Error('messages should not be a string!');
+
+    if (typeof messages === 'number')
+      throw new Meteor.Error('messages should not be an integer!');
+
+    if (typeof messages === 'boolean')
+      throw new Meteor.Error('messages should not be a boolean!');
+
     Session.set('matryoshkaMessages', messages );
+
+  };
+
+  that.getMessagesOfType = function ( type ) {
+    return _.filter(that.getMessages(), function( message ) {
+      return message.type === type;
+    });
   };
 
 };
