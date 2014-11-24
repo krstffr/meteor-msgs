@@ -27,7 +27,7 @@ Template.msgs.helpers({
 });
 
 Template.msgs.events({
-	'click .hide-message': function ( e ) {
+	'click .msgs__message__hide-message-link': function ( e ) {
 		e.preventDefault();
 		Msgs.removeMessage( this );
 	}
