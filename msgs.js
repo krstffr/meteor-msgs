@@ -8,8 +8,7 @@ MsgsHandler = function () {
   // Method for setting resetTime
   that.setResetTime = function ( newTime ) {
 
-    if (typeof newTime !== 'number')
-      throw new Meteor.Error('newTime should be a number');
+    check( newTime, Number );
 
     that.resetTime = newTime;
     
@@ -38,15 +37,12 @@ MsgsHandler = function () {
 
   that.addMessage = function ( message, type, category ) {
 
-    if (typeof message !== 'string')
-      throw new Meteor.Error('message should be a string');
-
-    if (typeof type !== 'string')
-      throw new Meteor.Error('type should be a string');
+    check( message, String );
+    check( type, String );
 
     // category is optional
-    if (category && typeof category !== 'string')
-      throw new Meteor.Error('category should be a string');
+    if (category)
+      check( category, String );
     
     var msg = { message: message, type: type, timestamp: new Date() };
     
@@ -72,35 +68,15 @@ MsgsHandler = function () {
 
   that.setMessages = function ( messages ) {
 
-    if (!messages)
-      throw new Meteor.Error('messages is not set!');
-
-    if (typeof messages === 'string')
-      throw new Meteor.Error('messages should not be a string!');
-
-    if (typeof messages === 'number')
-      throw new Meteor.Error('messages should not be an integer!');
-
-    if (typeof messages === 'boolean')
-      throw new Meteor.Error('messages should not be a boolean!');
+    check( messages, Array );
 
     Session.set('matryoshkaMessages', messages );
 
   };
 
   that.getMessagesFiltered = function ( filters ) {
-    // filter should not be a string or number, and should have a length
-    if (!filters)
-      throw new Meteor.Error('filters is not set!');
 
-    if (typeof filters === 'string')
-      throw new Meteor.Error('filters should not be a string!');
-
-    if (typeof filters === 'number')
-      throw new Meteor.Error('filters should not be an integer!');
-
-    if (typeof filters === 'boolean')
-      throw new Meteor.Error('filters should not be a boolean!');
+    check( filters, Array );
 
     if (filters.length < 1)
       throw new Meteor.Error('filters has less than 1 elements!');
