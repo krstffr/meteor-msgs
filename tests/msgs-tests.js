@@ -142,8 +142,31 @@ Tinytest.add('Msgs - setMessages method', function (test) {
 	Msgs.removeAllMessages();
 });
 
+// Test the setting of hide-button-visibility
+Tinytest.add("Msgs - set hide button visibility", function (test) {
+	// Button should be hidden by default
+	test.equal( Msgs.hideButton.show, false );
+	// Let's set it to visible
+	Msgs.hideButton.setVisibility( true );
+	test.equal( Msgs.hideButton.show, true );
+	// Let's reset it back to hidden
+	Msgs.hideButton.setVisibility( false );
+	test.equal( Msgs.hideButton.show, false );
+});
+
+// Test setting of the button HTML
+Tinytest.add("Msgs - set html for button", function (test) {
+	// Check the default value
+	test.equal( Msgs.hideButton.buttonHtml, 'x' );
+	// Let's set the HTML of the buttons to something else and
+	// make sure it gets returned
+	var htmlToSet = '<i class="fa fa-times"></i>';
+	Msgs.hideButton.setButtonHtml( htmlToSet );
+	test.equal( Msgs.hideButton.buttonHtml, htmlToSet );
+});
+
 // Check that user can set new time for resetTimer
-Tinytest.addAsync("Msgs - resetTimer should be setable by the user and messages should be reset after timer", function(test, next) {
+Tinytest.addAsync("Msgs Async - resetTimer should be setable by the user and messages should be reset after timer", function(test, next) {
 
 	// Just a method for adding quickly adding a message
 	var addMsg = function () {

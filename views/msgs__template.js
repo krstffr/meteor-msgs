@@ -1,4 +1,10 @@
 Template.msgs.helpers({
+	showHideButton: function () {
+		return Msgs.hideButton.show;
+	},
+	hideButtonHtml: function () {
+		return Msgs.hideButton.buttonHtml;
+	},
 	messages: function () {
 		
 		// Filter messages using this array
@@ -21,7 +27,8 @@ Template.msgs.helpers({
 });
 
 Template.msgs.events({
-	'click .hide-message': function () {
+	'click .hide-message': function ( e ) {
+		e.preventDefault();
 		Msgs.removeMessage( this );
 	}
 });

@@ -5,6 +5,29 @@ MsgsHandler = function () {
 	// Config vars
   that.resetTime = 5000;
 
+  // Handling of hide butotn
+  that.hideButton = {};
+
+  that.hideButton.buttonHtml = 'x';
+
+  that.hideButton.setButtonHtml = function ( html ) {
+
+    check( html, String );
+
+    that.hideButton.buttonHtml = html;
+
+  };
+
+  that.hideButton.show = false;
+
+  that.hideButton.setVisibility = function ( showBool ) {
+
+    check( showBool, Boolean );
+
+    that.hideButton.show = showBool;
+    
+  };
+
   // Method for setting resetTime
   that.setResetTime = function ( newTime ) {
 

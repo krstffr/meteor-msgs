@@ -1,5 +1,9 @@
 if (Meteor.isClient) {
 
+  // Let's show hide buttons
+  Msgs.hideButton.setVisibility( true );
+  Msgs.hideButton.setButtonHtml( '<span style="color: red">Hide</span> this message' );
+
   var msgCounter = 0;
 
   Template.msgsDemo.events({
